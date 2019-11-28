@@ -84,6 +84,6 @@ app.use((req, res, next) => {
 });
 
 app.listen(3000, function () {
-    console.log("express server is running at 3000.");
+    console.log("express server is running at 3000");
 });
 
