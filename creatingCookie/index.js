@@ -45,6 +45,15 @@ app.use((req, res, next) => {
         console.log(req.session.isLoggedIn);
         return res.end();
     }
+    if (url === '/signup' && method === 'POST') {
+        res.sendFile(path.join(__dirname, './', 'views', 'signup.html'));
+        var passwordSignUp = req.body.password;
+        console.log(passwordSignUp);
+
+        bcrypt.hash(passwordSignUp, 10, function (err, hash) {
+            console.log(hash);
+        });
+    }
 
     if (url === '/login' && method === 'POST') {
         res.sendFile(path.join(__dirname, './', 'views', 'login.html'));
@@ -54,19 +63,16 @@ app.use((req, res, next) => {
         //setting cookie
         res.setHeader('Set-Cookie', 'loogedIn=true; Max-Age=10; HttpOnly')
 
+
         // res.setHeader('Set-Cookie', req.body.email)
 
     }
+    
     if (url === '/logout' && method === 'POST') {
         res.sendFile(path.join(__dirname, './', 'views', 'logout.html'));
-
         req.session.destroy();
+    }
 
-    }
-    if (url === '/signup' && method === 'POST') {
-        res.sendFile(path.join(__dirname, './', 'views', 'signup.html'));
-        var password = req.body.password;
-    }
 
     // res.setHeader('Content-Type', 'text/html');
     // res.write('<html>');
@@ -74,8 +80,6 @@ app.use((req, res, next) => {
     // res.write('<body><h1>Hi</h1></body>');
     // res.write('</html>');
     // res.end();
-    let hash = bcrypt.hash(password, 10);
-    console.log(hash);
 
 });
 
